@@ -35,10 +35,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     //DB
-//    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-//    implementation 'mysql:mysql-connector-java'
-//    implementation 'com.vladmihalcea:hibernate-types-52:2.9.3'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'mysql:mysql-connector-java'
+    implementation 'com.vladmihalcea:hibernate-types-52:2.9.3'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
