@@ -29,11 +29,13 @@ repositories {
 
 dependencies {
     implementation project(":coreweb")
-    implementation project(":auth")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    //security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     //DB
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'

@@ -1,7 +1,9 @@
 package com.ml.coreweb.util;
 
+import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 /**
  * BookWormV2
@@ -18,5 +20,18 @@ public class DateTimeUtil {
 	
 	public static long timeNowToEpochSecond(){
 		return timeNow().toInstant().toEpochMilli();
+	}
+	
+	public static Date dateFromZonedDateTimeToNow() {
+		Instant instant = timeNow().toInstant();
+		// Create Date instance out of Instant
+		return Date.from(instant);
+	}
+	
+	public static Date dateFromZonedDateTimeToNow(ZonedDateTime zonedDateTime) {
+		// We just say what Instant is and how it used in the blog
+		Instant instant = zonedDateTime.toInstant();
+		// Create Date instance out of Instant
+		return Date.from(instant);
 	}
 }

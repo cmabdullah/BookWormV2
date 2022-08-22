@@ -1,5 +1,6 @@
 package com.ml.coreweb.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
  * Ref:
  */
 @RestControllerAdvice
+@Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(value = ApiError.class)
@@ -30,6 +33,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiErrorResponse errorResponse = new ApiErrorResponse(error.getErrorMessage(), error.getErrors());
 		
 		return new ResponseEntity<>(errorResponse, error.getStatus());
+	}
+	
+	@ExceptionHandler(Exception.class)
+	@ResponseBody
+	public ResponseEntity<Object> handleAnyException(Exception ex) {
+		String message = ex.getMessage() != null ? ex.getMessage() : ex.toString();
+		ApiError apiError = new ApiError(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		return apiErrorResponse(apiError);
 	}
 	
 	@Override

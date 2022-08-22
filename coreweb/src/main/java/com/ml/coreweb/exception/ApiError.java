@@ -1,5 +1,6 @@
 package com.ml.coreweb.exception;
 
+import com.ml.coreweb.util.TranslateMessage;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
@@ -29,16 +30,17 @@ public class ApiError extends RuntimeException {
 	}
 	
 	public ApiError(String errorMessage, HttpStatus status) {
-		this.errorMessage = errorMessage;
+		this.errorMessage = TranslateMessage.getMessage(errorMessage);
 		this.status = status;
 	}
 	
 	public void addError(String key, String message) {
-		errors.put(key, message);
+		errors.put(key, TranslateMessage.getMessage(message));
 	}
 	
 	public void addAllErrors(Map<String, String> errorMap) {
-		errors.putAll(errorMap);
+		errorMap.forEach((key, value) -> errors.put(key, TranslateMessage.getMessage(value)));
+		//errors.putAll(errorMap);
 	}
 	
 	@Override
