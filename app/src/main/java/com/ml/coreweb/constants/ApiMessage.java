@@ -14,6 +14,7 @@ public class ApiMessage {
 	public static final String MINIMUM_PRICE_REQUIRED = "minimum.price.required";
 	public static final String PRODUCT_CATEGORY_ERROR = "product.category.error";
 	public static final String PRODUCT_NOT_FOUND_ERROR = "product.not.found.error";
+	public static final String MAX_LIMIT_ERROR = "max.limit.error";
 	public static final String SUCCESS = "success";
 	
 	//order

@@ -1,5 +1,7 @@
 package com.ml.coreweb.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +17,8 @@ import javax.persistence.OneToOne;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Payment extends BaseEntity {
 	
 	private String type;
@@ -22,8 +26,8 @@ public class Payment extends BaseEntity {
 	private String cardNumber;
 	private int cvc;
 	
-	@OneToOne
-	private Order order;
+//	@OneToOne
+//	private Order order;
 	
 	//set billing address -> todo
 }

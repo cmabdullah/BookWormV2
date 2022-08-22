@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShippingAddressDto {
-	
+	private long addressId;
 	@NotBlank(message = ApiMessage.HOUSE_NO_REQUIRED_ERROR)
 	private String houseNo;
 	@NotBlank(message = ApiMessage.ROAD_NO_REQUIRED_ERROR)

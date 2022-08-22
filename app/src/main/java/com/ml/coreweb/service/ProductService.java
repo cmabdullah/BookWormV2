@@ -1,5 +1,6 @@
 package com.ml.coreweb.service;
 
+import com.ml.coreweb.domain.Product;
 import com.ml.coreweb.request.ProductRequestDto;
 import com.ml.coreweb.response.ProductResponseDto;
 
@@ -19,4 +20,6 @@ public interface ProductService {
 	ProductResponseDto update(ProductRequestDto productRequestDto);
 	
 	void delete(Long id);
+	
+	List<Product> findAllProductByProductId(List<Long> productIdList);
 }

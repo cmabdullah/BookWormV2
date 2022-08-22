@@ -10,6 +10,8 @@ import com.ml.coreweb.request.ProductRequestDto;
 import com.ml.coreweb.response.ProductResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -91,6 +93,13 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void delete(Long id) {
 		productRepository.deleteById(id);
+	}
+	
+	@Override
+	public List<Product> findAllProductByProductId(List<Long> productIdList) {
+		
+		List<Product> list = productRepository.findByIdIn(productIdList);
+		return list;
 	}
 	
 	private void updateProduct(ProductRequestDto productRequestDto, Product product) {

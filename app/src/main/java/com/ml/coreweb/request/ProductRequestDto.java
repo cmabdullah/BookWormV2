@@ -3,6 +3,7 @@ package com.ml.coreweb.request;
 import com.ml.coreweb.constants.ApiMessage;
 import lombok.Data;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 public class ProductRequestDto {
-	private Long productId;
+	private long productId;
 	@NotBlank(message = ApiMessage.PRODUCT_NAME_ERROR)
 	private String productName;
 	@NotBlank(message = ApiMessage.PRODUCT_SKU_ERROR)
@@ -22,8 +23,10 @@ public class ProductRequestDto {
 	private String productDescription;
 	
 	@Min(value = 0, message = ApiMessage.MINIMUM_PRICE_REQUIRED)
-	private Double productPrice;
-	private Double productWeight;
+	private double productPrice;
+	@Max(value = 4, message = ApiMessage.MAX_LIMIT_ERROR)
+	private int qty;
+	private double productWeight;
 	
 //	//can have only 4
 //	private int productQuantity;

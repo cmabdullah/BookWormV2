@@ -1,7 +1,6 @@
 package com.ml.coreweb.request;
 
 import com.ml.coreweb.constants.ApiMessage;
-import com.ml.coreweb.domain.CartItem;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -27,5 +26,5 @@ public class OrderRequestDto {
 	private Double orderTotal;
 	private ShippingAddressDto shippingAddress;
 	private PaymentDto payment;
-	private List<CartItemDto> cartItems;
+	private OrderDetailsRequest orderDetails;
 }
