@@ -1,7 +1,8 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.5' apply false
+    id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'maven-publish'
 }
 
 apply plugin: 'java-library'
@@ -15,11 +16,11 @@ group = 'com.ml'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
+//configurations {
+//    compileOnly {
+//        extendsFrom annotationProcessor
+//    }
+//}
 
 repositories {
     mavenLocal()
@@ -29,11 +30,16 @@ repositories {
 
 dependencies {
     implementation project(":coreweb")
-    implementation project(":auth")
+     implementation project(":auth")
+//    implementation files("libs/coreweb-0.0.1-SNAPSHOT.jar") //core
+//    implementation files("libs/coreweb-10.0.1-SNAPSHOT.jar") //auth
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    //security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     //DB
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -68,11 +74,11 @@ test {
     useJUnitPlatform()
 }
 
-bootJar {
-    enabled = false
-}
-
-jar {
-    enabled = true
-    destinationDir = file("build/libs")
-}
+//bootJar {
+//    enabled = false
+//}
+//
+//jar {
+//    enabled = true
+//    destinationDir = file("build/libs")
+//}

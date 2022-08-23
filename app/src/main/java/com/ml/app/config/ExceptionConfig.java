@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * User Khan, C M Abdullah
  * Ref:
  */
-@Component
+//@Component
 public class ExceptionConfig extends RestExceptionHandler {
 
 }

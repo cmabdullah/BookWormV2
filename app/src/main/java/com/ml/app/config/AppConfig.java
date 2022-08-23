@@ -1,5 +1,6 @@
 package com.ml.app.config;
 
+import com.ml.auth.config.SecurityConfig;
 import com.ml.coreweb.interceptors.ActivityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,12 +19,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class AppConfig implements WebMvcConfigurer {
 	
 	private final ActivityInterceptor activityInterceptor;
-	
+
 	@Autowired
 	public AppConfig(ActivityInterceptor activityInterceptor) {
-		
+
 		this.activityInterceptor = activityInterceptor;
-		
+
 	}
 	
 	@Bean

@@ -12,14 +12,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'java'
 
 group = 'com.ml'
-version = '0.0.1-SNAPSHOT'
+version = '10.0.1-SNAPSHOT'
 sourceCompatibility = '11'
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
 
 repositories {
     mavenLocal()
@@ -28,7 +22,8 @@ repositories {
 }
 
 dependencies {
-    implementation project(":coreweb")
+//    implementation project(":coreweb")
+    implementation files("libs/coreweb-0.0.1-SNAPSHOT.jar")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-validation')
@@ -66,15 +61,25 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
 }
 
-bootJar {
-    enabled = false
+tasks.named('bootBuildImage') {
+    builder = 'paketobuildpacks/builder:tiny'
+    environment = ['BP_NATIVE_IMAGE': 'true']
 }
 
-jar {
-    enabled = true
-    destinationDir = file("build/libs")
-}
+
+//test {
+//    useJUnitPlatform()
+//}
+//
+//bootJar {
+//    enabled = false
+//}
+//
+//jar {
+//    enabled = true
+//    destinationDir = file("build/libs")
+//}
