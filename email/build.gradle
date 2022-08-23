@@ -1,8 +1,7 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.5'
+    id 'org.springframework.boot' version '2.4.5' apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'maven-publish'
 }
 
 apply plugin: 'java-library'
@@ -13,14 +12,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'java'
 
 group = 'com.ml'
-version = '0.0.1-SNAPSHOT'
+version = '10.0.1-SNAPSHOT'
 sourceCompatibility = '11'
-
-//configurations {
-//    compileOnly {
-//        extendsFrom annotationProcessor
-//    }
-//}
 
 repositories {
     mavenLocal()
@@ -29,32 +22,18 @@ repositories {
 }
 
 dependencies {
-    implementation project(":coreweb")
-     implementation project(":auth")
-     implementation project(":email")
-//    implementation files("libs/coreweb-0.0.1-SNAPSHOT.jar") //core
-//    implementation files("libs/coreweb-10.0.1-SNAPSHOT.jar") //auth
+//    implementation project(":coreweb")
+    implementation files("libs/coreweb-0.0.1-SNAPSHOT.jar")
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    //email
+    implementation 'org.springframework.boot:spring-boot-starter-mail:2.5.6'
+    implementation 'javax.mail:mail:1.4.7'
+
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    //email
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-    //security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    //DB
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'mysql:mysql-connector-java'
-    implementation 'com.vladmihalcea:hibernate-types-52:2.9.3'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-
-    implementation 'io.jsonwebtoken:jjwt:0.6.0'
-    implementation 'org.imgscalr:imgscalr-lib:4.2'
 
     implementation 'org.apache.commons:commons-lang3:3.3.2'
     implementation 'org.apache.commons:commons-collections4:4.0'
@@ -73,10 +52,20 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
 }
 
+tasks.named('bootBuildImage') {
+    builder = 'paketobuildpacks/builder:tiny'
+    environment = ['BP_NATIVE_IMAGE': 'true']
+}
+
+
+//test {
+//    useJUnitPlatform()
+//}
+//
 //bootJar {
 //    enabled = false
 //}

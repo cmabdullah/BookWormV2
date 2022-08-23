@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import java.util.List;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.ml.app", "com.ml.coreweb", "com.ml.auth"})
+@ComponentScan(basePackages = {"com.ml.app", "com.ml.coreweb", "com.ml.auth", "com.ml.email"})
 public class AppApplication implements CommandLineRunner {
 	
 	@Autowired
