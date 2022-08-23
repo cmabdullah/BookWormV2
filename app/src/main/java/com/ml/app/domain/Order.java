@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * BookWormV2
@@ -28,10 +29,10 @@ public class Order extends BaseEntity {
 	@OneToOne(cascade = CascadeType.ALL)
 	private ShippingAddress shippingAddress;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Payment payment;
+//	@OneToOne(cascade = CascadeType.ALL)
+//	private Payment payment;
 	
 	//need work
-	@OneToOne
-	private OrderDetails OrderDetails;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+	private List<OrderDetails> OrderDetailsList;
 }

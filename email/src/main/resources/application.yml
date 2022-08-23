@@ -1,0 +1,60 @@
+logging:
+  level:
+    com.ecommarce: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate: ERROR
+
+server:
+  port : 8081
+
+
+applicationName: Classified E Commerce
+contactEmail: cmabdullah21@gmail.com
+
+  # ===============================
+  # = Email config
+  # ===============================
+spring:
+  # Email config
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: username
+    password: password
+
+    # Other properties
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          # TLS , port 587
+          starttls:
+            enable: true
+# SSL, post 465
+#          socketFactory:
+#            port: 465
+#            class: javax.net.ssl.SSLSocketFactory
+
+
+#spring.mail.host=smtp.gmail.com
+#spring.mail.username=a.kyium.khan@gmail.com
+#spring.mail.password=786cmkhan.
+
+#spring.mail.smtp.auth=true
+#
+#spring.mail.properties.mail.transport.protocol=smtp
+#spring.mail.properties.mail.smtp.port=587
+#spring.mail.properties.mail.smtp.starttls.enable=true
+#spring.mail.properties.mail.smtp.starttls.required=true
+#spring.mail.properties.mail.smtp.auth=true
+#
+#spring.mail.properties.mail.smtp.socketFactory.port=587
+##spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory
+#spring.mail.properties.mail.smtp.socketFactory.fallback=false
+#spring.mail.properties.mail.smtp.ssl.enable=false
+#spring.mail.properties.mail.smtp.debug=true
+#spring.mail.properties.mail.protocol=smtp
+##support.email=a.kyium.khan@gmail.com

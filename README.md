@@ -117,6 +117,21 @@ curl --location --request POST 'http://localhost:8081/auth/api/order/submit' \
             }
         ]
     }
+    {
+        "orderId":"001",
+        "orderDate":"10-8-22",
+        "qty":10,
+        "orderDetailsList": [
+            {
+                "productId": 2,
+                "productName": "iphone 13",
+            }
+            {
+                "productId": 2,
+                "productName": "iphone 13",
+            }
+        ]
+    }
 }'
 ```
 

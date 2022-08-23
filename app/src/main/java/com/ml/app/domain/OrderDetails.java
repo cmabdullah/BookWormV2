@@ -20,10 +20,16 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class OrderDetails extends BaseEntity {
-	private int qty;
-	@OneToMany
-	private List<Product> products;
+	private int qty;//no need
+	//price
+	//
+//	@OneToMany
+	//private List<Product> products;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id")
+	private Product product;
 	
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "order_id")
 	private Order order;
 }

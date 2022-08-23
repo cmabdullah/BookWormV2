@@ -75,7 +75,8 @@ public class OrderServiceImpl implements OrderService {
 		Order savedOrder = orderRepository.save(newOrder);
 		log.info("order saved "+savedOrder.toString());
 		
-		OrderDetails orderDetails = OrderDetails.builder().qty(orderDetailsRequest.getQty()).products(productList)
+		OrderDetails orderDetails = OrderDetails.builder().qty(orderDetailsRequest.getQty())
+//											.products(productList)
 											.order(savedOrder).build();
 		
 		OrderDetails savedOrderDetails = orderDetailsService.save(orderDetails);
@@ -87,16 +88,16 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderDetails> getAllOrdersBasedOnProductName(String productName) {
 		//get all order, i will optimise later
-		List<OrderDetails> orderDetailsList = orderDetailsService.findAll();
-		List<OrderDetails> filteredOrderDetailsList = orderDetailsList.stream().filter(orderDetails -> {
-			List<Product> productList = orderDetails.getProducts()
-												.stream().filter(product -> product.getProductName().contains(productName))
-												.collect(Collectors.toList());
-			return CollectionUtils.isNotEmpty(productList);
-		}).collect(Collectors.toList());
-		Comparator<OrderDetails> comparator = (s1, s2) -> s2.getCreatedAt().compareTo(s1.getCreatedAt());
-		List<OrderDetails> sortedOrderDetailsList = filteredOrderDetailsList.stream().sorted(comparator).collect(Collectors.toList());
-		return sortedOrderDetailsList;
+//		List<OrderDetails> orderDetailsList = orderDetailsService.findAll();
+//		List<OrderDetails> filteredOrderDetailsList = orderDetailsList.stream().filter(orderDetails -> {
+//			List<Product> productList = orderDetails.getProducts()
+//												.stream().filter(product -> product.getProductName().contains(productName))
+//												.collect(Collectors.toList());
+//			return CollectionUtils.isNotEmpty(productList);
+//		}).collect(Collectors.toList());
+//		Comparator<OrderDetails> comparator = (s1, s2) -> s2.getCreatedAt().compareTo(s1.getCreatedAt());
+//		List<OrderDetails> sortedOrderDetailsList = filteredOrderDetailsList.stream().sorted(comparator).collect(Collectors.toList());
+		return null;
 	}
 	
 	private Payment getNewPaymentFromRequestDto(OrderRequestDto orderRequestDto) {
