@@ -16,5 +16,8 @@ public interface OrderService {
 	//@Transactional(rollbackFor = Exception.class)
 	OrderResponseDto save(OrderRequestDto orderRequestDto);
 	
-	List<OrderDetails> getAllOrdersBasedOnProductName(String productCategory);
+	List<OrderResponseDto> getAllOrdersBasedOnProductName(String productName, String sku, String category);
+	
+	List<OrderResponseDto> getOrderList();
+	List<OrderResponseDto>  getAllOrders();
 }

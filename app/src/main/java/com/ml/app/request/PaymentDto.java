@@ -18,7 +18,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDto {
-	private long id;
 	@NotBlank(message = ApiMessage.CARD_TYPE_REQUIRED_ERROR)
 	private String type;
 	@NotBlank(message = ApiMessage.CARD_NAME_REQUIRED_ERROR)

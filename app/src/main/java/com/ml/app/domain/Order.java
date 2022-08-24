@@ -24,7 +24,7 @@ public class Order extends BaseEntity {
 	
 	private String shippingMethod;
 	private String orderStatus;
-	private Double orderTotal;
+	private Double totalPrice;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private ShippingAddress shippingAddress;
@@ -33,6 +33,8 @@ public class Order extends BaseEntity {
 //	private Payment payment;
 	
 	//need work
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
 	private List<OrderDetails> OrderDetailsList;
+	
+	//userObject
 }
