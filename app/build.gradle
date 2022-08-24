@@ -34,7 +34,7 @@ dependencies {
 //     implementation project(":auth")
 //     implementation project(":email")
     implementation files("libs/coreweb-0.0.1-SNAPSHOT.jar") //core
-    implementation files("libs/auth-10.0.1-SNAPSHOT.jar") //auth
+    implementation files("libs/auth-10.0.2-SNAPSHOT.jar") //auth
     implementation files("libs/email-10.0.1-SNAPSHOT.jar") //email
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation('org.springframework.boot:spring-boot-starter-actuator')

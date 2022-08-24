@@ -20,12 +20,17 @@
   - enhanced code quality
   - update business logic
   - curls are share on this file curlList.md
-  - swagger end point http://localhost:8081/swagger-ui.html
+  - merged **main branch with refactor-1**
+  - docker image is deployed on docker hub
+  - swagger end point 
+    - http://localhost:8081/swagger-ui.html
 
 ### How to run the application
 > git clone https://github.com/cmabdullah/BookWormV2.git
 > 
 > cd BookWormV2/app
+> 
+> docker build -t cmabdullah21/spring-boot-docker-v14 --progress=plain .
 > 
 > docker-compose -f docker-compose.yml up
 > 

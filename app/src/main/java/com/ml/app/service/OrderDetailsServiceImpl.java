@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * BookWormV2
@@ -32,10 +33,9 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 	public List<OrderDetails> findAll() {
 		return orderDetailsRepository.findAll();
 	}
-
-//	public OrderDetails findAllOrderByProductName(String productName) {
-//
-//		List<OrderDetails> list = orderDetailsRepository.findAllByProductsWhereProductName(productName);
-//		return null;
-//	}
+	
+	@Override
+	public List<OrderDetails> saveAll(List<OrderDetails> orderDetailsList) {
+		return orderDetailsList.stream().map(orderDetailsRepository::save).collect(Collectors.toList());
+	}
 }

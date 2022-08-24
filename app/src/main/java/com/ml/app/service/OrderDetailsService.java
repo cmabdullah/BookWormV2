@@ -14,4 +14,6 @@ public interface OrderDetailsService {
 	OrderDetails save(OrderDetails orderDetails);
 	
 	List<OrderDetails> findAll();
+	
+	List<OrderDetails> saveAll(List<OrderDetails> orderDetailsList);
 }

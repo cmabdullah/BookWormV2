@@ -1,7 +1,7 @@
 version: "3"
 services:
   product-app:
-    image: cmabdullah21/spring-boot-docker-v11
+    image: cmabdullah21/spring-boot-docker-v14
     ports:
       - "8082:8081"
     depends_on:

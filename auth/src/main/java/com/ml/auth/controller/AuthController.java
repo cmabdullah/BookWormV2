@@ -41,7 +41,7 @@ public class AuthController {
 		return new ApiResponse<>(signUpResponseDto);
 	}
 
-	@ApiOperation(value = "[TEST]login --> 85% done")
+	@ApiOperation(value = "[TEST]login --> done")
 	@PostMapping("/login")
 	public ApiResponse<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
 		return new ApiResponse<>(userService.adminLoginIn(loginRequestDto));

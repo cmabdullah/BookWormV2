@@ -30,8 +30,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(value = ApiError.class)
 	public static ResponseEntity<?> handleGenericNotFoundException(ApiError error) {
 		
-		ApiErrorResponse errorResponse = new ApiErrorResponse(error.getErrorMessage(), error.getErrors());
-		
+		ApiErrorResponse errorResponse = new ApiErrorResponse("internal.server.error", error.getErrors());
+		log.error("exception.thrown "+error.getErrorMessage());
 		return new ResponseEntity<>(errorResponse, error.getStatus());
 	}
 	

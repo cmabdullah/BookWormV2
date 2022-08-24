@@ -1,11 +1,13 @@
 package com.ml.app.domain;
 
+import com.ml.auth.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * BookWormV2
@@ -23,15 +25,16 @@ public class Order extends BaseEntity {
 	
 	private String shippingMethod;
 	private String orderStatus;
-	private Double orderTotal;
+	private Double totalPrice;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private ShippingAddress shippingAddress;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Payment payment;
-	
 	//need work
-	@OneToOne
-	private OrderDetails OrderDetails;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+	private List<OrderDetails> OrderDetailsList;
+	
+	//userObject
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	User user;
 }

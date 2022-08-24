@@ -84,6 +84,21 @@ public class UserServiceImpl implements UserService {
 		User newUser = userRepository.save(user);
 		return new SignUpResponseDto(newUser.getEmail(), AuthConstants.REGISTRATION_SUCCESS);
 	}
+	
+	@Override
+	public SignUpResponseDto saveAdmin(SignUpRequestDto signUpRequestDto) {
+		signUpRequestDtoValidator.validate(signUpRequestDto);
+		User user = new User();
+		user.setEmail(signUpRequestDto.getEmail());
+		user.setPassword(passwordEncoder.encode(signUpRequestDto.getPassword()));
+		user.setProvider(AuthProvider.LOCAL);
+		Set<Role> role = new HashSet<>();
+		role.add(new Role("ROLE_ADMIN"));
+//		Set<Role> role2 = roleService.save(role);
+		user.setRoles(role);
+		User newUser = userRepository.save(user);
+		return new SignUpResponseDto(newUser.getEmail(), AuthConstants.REGISTRATION_SUCCESS);
+	}
 
 	@Override
 	public LoginResponseDto adminLoginIn(LoginRequestDto loginRequestDto) {

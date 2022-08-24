@@ -1,13 +1,18 @@
 package com.ml.app.controller;
 
-import com.ml.app.domain.OrderDetails;
 import com.ml.app.request.OrderRequestDto;
+import com.ml.app.request.SearchRequestDto;
 import com.ml.app.response.OrderResponseDto;
 import com.ml.app.service.OrderService;
+import com.ml.auth.common.UserPrincipal;
 import com.ml.coreweb.response.ApiResponse;
 import com.ml.email.service.EmailService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,23 +41,47 @@ public class OrderController {
 		this.emailService = emailService;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@ApiOperation(value = "[TEST] this url accept order submit request -> Done")
 	@PostMapping("/order/submit")
-	public ApiResponse<?> addProducts(@Valid @RequestBody OrderRequestDto orderRequestDto) {
+	public ApiResponse<?> addProducts(Authentication authentication, @Valid @RequestBody OrderRequestDto orderRequestDto) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userEmail = ((UserPrincipal) userDetails).getEmail();
 		log.info(orderRequestDto.toString());
-		OrderResponseDto orderResponseDto = orderService.save(orderRequestDto);
+		OrderResponseDto orderResponseDto = orderService.save(userEmail, orderRequestDto);
 		Map<String, Object> map = Map.of("to", "cmabdullah21@gmail.com",
 				"subject","Order Info", "order status",orderResponseDto.getOrderStatus());
 		emailService.sendEmailWithAttachment(map);
+		
 		return new ApiResponse<>(orderResponseDto);
 	}
 	
-	//get order list of user
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@ApiOperation(value = "[TEST] return all orders related to this user -> Done")
+	@GetMapping("/order/list")
+	public ApiResponse<?> getAllOrderByUser(Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userEmail = ((UserPrincipal) userDetails).getEmail();
+		List<OrderResponseDto> orderResponseDto = orderService.getOrderList(userEmail);
+		return new ApiResponse<>(orderResponseDto);
+	}
 	
-	@GetMapping("/order/getOrderBasedOnProductName/{productCategory}")
-	public ApiResponse<?> getAllOrderBasedOnProductName(@Valid @PathVariable(value = "productCategory")
-															String productCategory) {
-		log.info("productCategory "+productCategory);
-		List<OrderDetails> orderResponseDto = orderService.getAllOrdersBasedOnProductName(productCategory);
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@ApiOperation(value = "[TEST] search order based on product name, sku, and product category -> Done")
+	@PostMapping("/order/getOrderBasedOnProductName")
+	public ApiResponse<?> getAllOrderBasedOnProductName(Authentication authentication, @RequestBody SearchRequestDto searchRequest) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userEmail = ((UserPrincipal) userDetails).getEmail();
+		List<OrderResponseDto> orderResponseDto = orderService.getAllOrdersBasedOnProductName(userEmail,
+				searchRequest.getProductName(), searchRequest.getSku(), searchRequest.getCategory());
+		return new ApiResponse<>(orderResponseDto);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@ApiOperation(value = "[TEST] admin can search all order list -> Done")
+	@GetMapping("/order/getAllOrders")
+	public ApiResponse<?> getAllOrders() {
+		List<OrderResponseDto> orderResponseDto = orderService.getAllOrders();
 		return new ApiResponse<>(orderResponseDto);
 	}
 	

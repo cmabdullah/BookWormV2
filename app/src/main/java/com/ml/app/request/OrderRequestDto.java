@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * BookWormV2
@@ -24,14 +25,17 @@ public class OrderRequestDto {
 	private String shippingMethod;
 	// private String orderStatus;
 	@Min(value = 0, message = ApiMessage.TOTAL_PRICE_REQUIRED_ERROR)
-	private Double orderTotal;
+	private double totalPrice;
 	@NotNull(message = ApiMessage.SHIPPING_ADDRESS_ERROR)
 	@Valid
 	private ShippingAddressDto shippingAddress;
 	@NotNull(message = ApiMessage.PAYMENT_INFO_ERROR)
 	@Valid
 	private PaymentDto payment;
-	@NotNull(message = ApiMessage.ORDER_DETAILS_ERROR)
+//	@NotNull(message = ApiMessage.ORDER_DETAILS_ERROR)
+//	@Valid
+//	private OrderDetailsRequest orderDetails;
+	
 	@Valid
-	private OrderDetailsRequest orderDetails;
+	private List<ProductRequestDto> orderDetails;
 }
