@@ -67,7 +67,7 @@ public class ProductController {
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@ApiOperation(value = "[TEST] search product based on name, sku and category -> Todo")
-	@DeleteMapping("/product/search/{id}")
+	@GetMapping("/product/search/{id}")
 	public ApiResponse<?> search(@PathVariable(value = "id") Long id) {
 //		Users can search products by name, sku and category.
 		return new ApiResponse<>(ApiMessage.SUCCESS);
