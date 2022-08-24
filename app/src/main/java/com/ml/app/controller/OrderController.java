@@ -22,6 +22,7 @@ import java.util.Map;
  */
 @RestController
 @Slf4j
+@RequestMapping("/auth/api/")
 public class OrderController {
 	
 	private final OrderService orderService;
