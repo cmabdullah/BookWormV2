@@ -1,0 +1,30 @@
+version: "3"
+services:
+  product-app:
+    image: cmabdullah21/spring-boot-docker-v11
+    ports:
+      - "8082:8081"
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image:  mysql:8
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'productdbML'
+      MYSQL_USER: 'user-cm'
+      MYSQL_PASSWORD: 'rootcm'
+      MYSQL_ROOT_PASSWORD: 'rootcm'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - my-db-v2:/var/lib/mysql
+volumes:
+  my-db-v2:
+# docker build -t cmabdullah21/spring-boot-docker-v11 --progress=plain .
+# docker-compose -f docker-compose.yml up

@@ -22,6 +22,7 @@ sourceCompatibility = '11'
 //    }
 //}
 
+
 repositories {
     mavenLocal()
     maven { url 'https://repo.spring.io/release' }
@@ -29,11 +30,12 @@ repositories {
 }
 
 dependencies {
-    implementation project(":coreweb")
-     implementation project(":auth")
-     implementation project(":email")
-//    implementation files("libs/coreweb-0.0.1-SNAPSHOT.jar") //core
-//    implementation files("libs/coreweb-10.0.1-SNAPSHOT.jar") //auth
+//    implementation project(":coreweb")
+//     implementation project(":auth")
+//     implementation project(":email")
+    implementation files("libs/coreweb-0.0.1-SNAPSHOT.jar") //core
+    implementation files("libs/auth-10.0.1-SNAPSHOT.jar") //auth
+    implementation files("libs/email-10.0.1-SNAPSHOT.jar") //email
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-validation')
@@ -61,10 +63,10 @@ dependencies {
 
     implementation 'com.datastax.cassandra:cassandra-driver-core:3.6.0'
 
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.8.1'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.8.1'
+//    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7'
+//    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.8.1'
+//    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
+//    implementation 'com.fasterxml.jackson.core:jackson-core:2.8.1'
 
     compileOnly 'org.projectlombok:lombok'
     compileOnly "org.springframework.boot:spring-boot-configuration-processor"

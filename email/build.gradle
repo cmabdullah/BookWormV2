@@ -70,7 +70,7 @@ tasks.named('bootBuildImage') {
 //    enabled = false
 //}
 //
-//jar {
-//    enabled = true
-//    destinationDir = file("build/libs")
-//}
+jar {
+    enabled = true
+    destinationDir = file("build/libs")
+}
