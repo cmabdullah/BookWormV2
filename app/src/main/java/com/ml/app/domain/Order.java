@@ -1,5 +1,6 @@
 package com.ml.app.domain;
 
+import com.ml.auth.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,13 +29,12 @@ public class Order extends BaseEntity {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private ShippingAddress shippingAddress;
-	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	private Payment payment;
-	
 	//need work
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
 	private List<OrderDetails> OrderDetailsList;
 	
 	//userObject
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	User user;
 }

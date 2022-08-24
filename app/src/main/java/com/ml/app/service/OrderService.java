@@ -4,6 +4,7 @@ import com.ml.app.domain.OrderDetails;
 import com.ml.app.response.OrderResponseDto;
 import com.ml.app.request.OrderRequestDto;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -13,11 +14,11 @@ import java.util.List;
  * Ref:
  */
 public interface OrderService {
-	//@Transactional(rollbackFor = Exception.class)
-	OrderResponseDto save(OrderRequestDto orderRequestDto);
+	@Transactional
+	OrderResponseDto save(String userEmail, OrderRequestDto orderRequestDto);
 	
-	List<OrderResponseDto> getAllOrdersBasedOnProductName(String productName, String sku, String category);
+	List<OrderResponseDto> getAllOrdersBasedOnProductName(String userEmail, String productName, String sku, String category);
 	
-	List<OrderResponseDto> getOrderList();
+	List<OrderResponseDto> getOrderList(String userEmail);
 	List<OrderResponseDto>  getAllOrders();
 }

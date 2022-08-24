@@ -36,19 +36,6 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 	
 	@Override
 	public List<OrderDetails> saveAll(List<OrderDetails> orderDetailsList) {
-		
-		List<OrderDetails> orderDetailsList1 = orderDetailsList.stream().map(orderDetails -> {
-			OrderDetails od =  orderDetailsRepository.save(orderDetails);
-						return od;
-				}).collect(Collectors.toList());
-				
-		
-		return orderDetailsList1;
+		return orderDetailsList.stream().map(orderDetailsRepository::save).collect(Collectors.toList());
 	}
-
-//	public OrderDetails findAllOrderByProductName(String productName) {
-//
-//		List<OrderDetails> list = orderDetailsRepository.findAllByProductsWhereProductName(productName);
-//		return null;
-//	}
 }

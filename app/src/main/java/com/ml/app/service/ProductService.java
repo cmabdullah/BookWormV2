@@ -2,6 +2,7 @@ package com.ml.app.service;
 
 import com.ml.app.domain.Product;
 import com.ml.app.request.ProductRequestDto;
+import com.ml.app.response.OrderResponseDto;
 import com.ml.app.response.ProductResponseDto;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface ProductService {
 	void delete(Long id);
 	
 	List<Product> findAllProductByProductId(List<Long> productIdList);
+	
+	List<ProductResponseDto> search(String productName, String sku, String category);
 }

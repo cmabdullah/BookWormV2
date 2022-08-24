@@ -24,6 +24,7 @@ public interface UserService {
 	Optional<User> findById(Long id);
 
 	SignUpResponseDto save(SignUpRequestDto signUpRequestDto);
+	SignUpResponseDto saveAdmin(SignUpRequestDto signUpRequestDto);
 
 	LoginResponseDto adminLoginIn(LoginRequestDto loginRequestDto);
 

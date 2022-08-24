@@ -2,6 +2,8 @@ package com.ml.app.controller;
 
 import com.ml.app.constants.ApiMessage;
 import com.ml.app.request.ProductRequestDto;
+import com.ml.app.request.SearchRequestDto;
+import com.ml.app.response.OrderResponseDto;
 import com.ml.coreweb.response.ApiResponse;
 import com.ml.app.response.ProductResponseDto;
 import com.ml.app.service.ProductService;
@@ -66,10 +68,11 @@ public class ProductController {
 	//todo search api
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@ApiOperation(value = "[TEST] search product based on name, sku and category -> Todo")
+	@ApiOperation(value = "[TEST] search product based on name, sku and category -> Done")
 	@DeleteMapping("/product/search/{id}")
-	public ApiResponse<?> search(@PathVariable(value = "id") Long id) {
-//		Users can search products by name, sku and category.
-		return new ApiResponse<>(ApiMessage.SUCCESS);
+	public ApiResponse<?> search(Authentication authentication, @RequestBody SearchRequestDto searchRequest) {
+		List<ProductResponseDto> productResponseDto = productService.search(searchRequest.getProductName(),
+				searchRequest.getSku(), searchRequest.getCategory());
+		return new ApiResponse<>(productResponseDto);
 	}
 }

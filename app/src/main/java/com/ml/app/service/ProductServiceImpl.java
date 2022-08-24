@@ -96,8 +96,31 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findAllProductByProductId(List<Long> productIdList) {
 		
-		List<Product> list = productRepository.findByIdIn(productIdList);
-		return list;
+		return productRepository.findByIdIn(productIdList);
+	}
+	
+	@Override
+	public List<ProductResponseDto> search(String productName, String sku, String category) {
+		List<Product> productList = productRepository.findAll();
+		return productList.stream().filter(Objects::nonNull)
+				.filter(product ->
+								Objects.nonNull(productName) && product.getProductName().contains(productName) ||
+										Objects.nonNull(sku) &&product.getProductSKU().contains(sku) ||
+										Objects.nonNull(category) &&
+												product.getCategories().getCategoryName().contains(category)
+				).map(this::productToProductResponseDto).collect(Collectors.toList());
+	}
+	
+	private ProductResponseDto productToProductResponseDto(Product product) {
+		return ProductResponseDto.builder()
+					   .productId(product.getId())
+					   .productName(product.getProductName())
+					   .productDescription(product.getProductDescription())
+					   .productPrice(product.getProductPrice())
+					   .productSKU(product.getProductSKU())
+					   .productWeight(product.getProductWeight())
+					   .productCategory(product.getCategories().getCategoryName())
+					   .build();
 	}
 	
 	private void updateProduct(ProductRequestDto productRequestDto, Product product) {

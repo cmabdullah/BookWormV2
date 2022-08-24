@@ -8,6 +8,8 @@ import com.ml.app.request.ProductRequestDto;
 import com.ml.app.request.ShippingAddressDto;
 import com.ml.app.response.OrderResponseDto;
 import com.ml.app.response.ProductResponseDto;
+import com.ml.auth.domain.User;
+import com.ml.auth.service.UserService;
 import com.ml.coreweb.exception.ApiError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,22 +34,25 @@ public class OrderServiceImpl implements OrderService {
 	private final ShippingService shippingService;
 	private final ProductService productService;
 	private final OrderDetailsService orderDetailsService;
+	private final UserService userService;
 	
 	@Autowired
 	public OrderServiceImpl(OrderRepository orderRepository,
 							PaymentService paymentService,
 							ShippingService shippingService,
 							ProductService productService,
-							OrderDetailsService orderDetailsService) {
+							OrderDetailsService orderDetailsService,
+							UserService userService) {
 		this.orderRepository = orderRepository;
 		this.paymentService = paymentService;
 		this.shippingService = shippingService;
 		this.productService = productService;
 		this.orderDetailsService = orderDetailsService;
+		this.userService = userService;
 	}
 	
 	@Override
-	public OrderResponseDto save(OrderRequestDto orderRequestDto) {
+	public OrderResponseDto save(String userEmail, OrderRequestDto orderRequestDto) {
 		
 		List<ProductRequestDto> productRequestDtoList = orderRequestDto.getOrderDetails();
 		
@@ -81,9 +86,12 @@ public class OrderServiceImpl implements OrderService {
 		
 		double totalPrice = productList.stream().filter(Objects::nonNull).map(Product::getProductPrice)
 									.mapToDouble(Double::doubleValue).sum();
+		
+		User user = userService.findByEmail(userEmail).get();
 		//initialize order
 		Order newOrder = Order.builder().totalPrice(totalPrice)
 								 .shippingMethod(orderRequestDto.getShippingMethod())
+								 .user(user)
 								 .shippingAddress(shippingAddress).orderStatus("success").build();
 		Order savedOrder = orderRepository.save(newOrder);
 		log.info("order saved " + savedOrder.toString());
@@ -113,15 +121,18 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public List<OrderResponseDto> getAllOrdersBasedOnProductName(String productName, String sku, String category) {
-		List<OrderResponseDto> orderList = getOrderList();
+	public List<OrderResponseDto> getAllOrdersBasedOnProductName(String userEmail, String productName, String sku, String category) {
+		List<OrderResponseDto> orderList = getOrderList(userEmail);
 		List<OrderResponseDto> filteredOrderList = orderList.stream().filter(orderResponse -> {
 			List<ProductResponseDto> products = orderResponse.getProducts();
 			
 			List<ProductResponseDto> filteredProductsList =
-					products.stream().filter(product -> product.getProductName().contains(productName) ||
-																product.getProductSKU().contains(sku) ||
-																product.getProductCategory().contains(category))
+					products.stream()
+							.filter(product ->
+										Objects.nonNull(productName) && product.getProductName().contains(productName) ||
+										Objects.nonNull(sku) &&product.getProductSKU().contains(sku) ||
+										Objects.nonNull(category) &&product.getProductCategory().contains(category)
+							)
 							.collect(Collectors.toList());
 			
 			if (filteredProductsList.size() != 0) {
@@ -137,23 +148,22 @@ public class OrderServiceImpl implements OrderService {
 	
 	//this method will return user's orders
 	@Override
-	public List<OrderResponseDto> getOrderList() {
-		long userId = 100l;
+	public List<OrderResponseDto> getOrderList(String userEmail) {
+		User user = userService.findByEmail(userEmail).get();
+		long userId = user.getId();
 		//i will optimise later
 		//user id will be find from user object
 		List<Order> orderList = orderRepository.findAll();
 		Comparator<Order> comparator = (s1, s2) -> s2.getCreatedAt().compareTo(s1.getCreatedAt());
-		List<OrderResponseDto> orderResponseDtos =
-				orderList.stream()
-						.filter(Objects::nonNull)
-						.sorted(comparator)
-						//.filter(userId)
-						.map(order -> {
-							List<ProductResponseDto> productResponseDtoList = prepareProductResponseDto(order.getOrderDetailsList());
-							return orderToOrderResponseDto(order, productResponseDtoList);
-						}).collect(Collectors.toList());
 		
-		return orderResponseDtos;
+		return orderList.stream()
+				.filter(Objects::nonNull)
+				.sorted(comparator)
+				.filter(order -> order.getUser().getId().equals(userId))
+				.map(order -> {
+					List<ProductResponseDto> productResponseDtoList = prepareProductResponseDto(order.getOrderDetailsList());
+					return orderToOrderResponseDto(order, productResponseDtoList);
+				}).collect(Collectors.toList());
 	}
 	
 	//this method will return all orders
@@ -162,15 +172,12 @@ public class OrderServiceImpl implements OrderService {
 		//i will optimise later
 		List<Order> orderList = orderRepository.findAll();
 		
-		List<OrderResponseDto> orderResponseDtos =
-				orderList.stream()
-						.filter(Objects::nonNull)
-						.map(order -> {
-							List<ProductResponseDto> productResponseDtoList = prepareProductResponseDto(order.getOrderDetailsList());
-							return orderToOrderResponseDto(order, productResponseDtoList);
-						}).collect(Collectors.toList());
-		
-		return orderResponseDtos;
+		return orderList.stream()
+				.filter(Objects::nonNull)
+				.map(order -> {
+					List<ProductResponseDto> productResponseDtoList = prepareProductResponseDto(order.getOrderDetailsList());
+					return orderToOrderResponseDto(order, productResponseDtoList);
+				}).collect(Collectors.toList());
 	}
 	
 	private Payment getNewPaymentFromRequestDto(OrderRequestDto orderRequestDto) {
