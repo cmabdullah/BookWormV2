@@ -27,6 +27,8 @@
 > 
 > cd BookWormV2/app
 > 
+> docker build -t cmabdullah21/spring-boot-docker-v11 --progress=plain .
+> 
 > docker-compose -f docker-compose.yml up
 > 
 > 
