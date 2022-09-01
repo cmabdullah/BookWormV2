@@ -26,6 +26,15 @@ sourceCompatibility = '11'
 repositories {
     mavenLocal()
     maven { url 'https://repo.spring.io/release' }
+    maven {
+        url "https://cmabdullah21.jfrog.io/artifactory/gradle-challenge-local"
+        //this is temporary credential
+        credentials {
+            username = "abdullah"
+            password = "789abc123AAA@10110"
+        }
+    }
+
     mavenCentral()
 }
 
@@ -34,7 +43,8 @@ dependencies {
 //     implementation project(":auth")
 //     implementation project(":email")
     implementation files("libs/coreweb-0.0.2-SNAPSHOT.jar") //core
-    implementation files("libs/auth-10.0.3.jar") //auth
+    //implementation files("libs/auth-10.0.3.jar") //auth
+    implementation 'com.ml:auth:10.0.3'
     implementation files("libs/email-10.0.1-SNAPSHOT.jar") //email
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation('org.springframework.boot:spring-boot-starter-actuator')
