@@ -1,5 +1,6 @@
 package com.ml.app.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ml.app.constants.ApiMessage;
 import lombok.*;
 
@@ -17,9 +18,12 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShippingAddressDto {
+	@JsonProperty("address_id")
 	private long addressId;
+	@JsonProperty("house_no")
 	@NotBlank(message = ApiMessage.HOUSE_NO_REQUIRED_ERROR)
 	private String houseNo;
+	@JsonProperty("road_no")
 	@NotBlank(message = ApiMessage.ROAD_NO_REQUIRED_ERROR)
 	private String roadNo;
 	private String city;

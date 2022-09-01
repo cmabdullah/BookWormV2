@@ -1,9 +1,6 @@
 package com.ml.app.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,6 +23,7 @@ public class OrderDetails extends BaseEntity {
 	@JoinColumn(name = "product_id")
 	private Product product;
 	
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_id")
 	private Order order;

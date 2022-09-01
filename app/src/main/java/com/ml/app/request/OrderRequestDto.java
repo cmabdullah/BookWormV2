@@ -1,5 +1,6 @@
 package com.ml.app.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ml.app.constants.ApiMessage;
 import lombok.*;
 
@@ -21,11 +22,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderRequestDto {
+	@JsonProperty("shipping_method")
 	@NotBlank(message = ApiMessage.SHIPPING_METHOD_ERROR)
 	private String shippingMethod;
 	// private String orderStatus;
+	@JsonProperty("total_price")
 	@Min(value = 0, message = ApiMessage.TOTAL_PRICE_REQUIRED_ERROR)
 	private double totalPrice;
+	@JsonProperty("shipping_address")
 	@NotNull(message = ApiMessage.SHIPPING_ADDRESS_ERROR)
 	@Valid
 	private ShippingAddressDto shippingAddress;
@@ -35,7 +39,7 @@ public class OrderRequestDto {
 //	@NotNull(message = ApiMessage.ORDER_DETAILS_ERROR)
 //	@Valid
 //	private OrderDetailsRequest orderDetails;
-	
+	@JsonProperty("order_details")
 	@Valid
 	private List<ProductRequestDto> orderDetails;
 }

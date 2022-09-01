@@ -1,10 +1,7 @@
 package com.ml.app.domain;
 
 import com.ml.auth.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -29,6 +26,7 @@ public class Order extends BaseEntity {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private ShippingAddress shippingAddress;
+	@ToString.Exclude
 	//need work
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
 	private List<OrderDetails> OrderDetailsList;

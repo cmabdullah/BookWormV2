@@ -1,5 +1,6 @@
 package com.ml.app.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ml.app.constants.ApiMessage;
 import lombok.*;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailsRequest {
+	@JsonProperty("qty")
 	@Min(value = 0, message = ApiMessage.MINIMUM_PRICE_REQUIRED)
 	private int qty;
 	@NotNull(message = ApiMessage.ORDER_DETAILS_PRODUCT_LIST_ERROR)

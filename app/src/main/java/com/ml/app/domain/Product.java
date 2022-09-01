@@ -1,9 +1,6 @@
 package com.ml.app.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,9 +23,11 @@ public class Product extends BaseEntity {
 	private Double productPrice;
 	private Double productWeight;
 	
+	@ToString.Exclude
 	@OneToOne
 	private Categories categories;
 	
+	@ToString.Exclude
 	// category
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 	private List<OrderDetails> orderDetailsList;
