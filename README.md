@@ -24,6 +24,9 @@
   - docker image is deployed on docker hub
   - swagger end point 
     - http://localhost:8081/swagger-ui.html
+  - coreweb and auth has moved to separate repository
+  - https://github.com/cmabdullah/auth.git
+  - https://github.com/cmabdullah/coreweb.git
 
 ### How to run the application
 > git clone https://github.com/cmabdullah/BookWormV2.git

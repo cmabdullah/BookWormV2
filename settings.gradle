@@ -1,1 +1,1 @@
-include "coreweb","app","auth", "email"
+include "app", "email"
